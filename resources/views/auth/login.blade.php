@@ -6,9 +6,9 @@
     <title>Reegister</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="bg-primary">
+<body class="bg-warning" style="--bs-bg-opacity: .4;">
 <div  class="d-flex justify-content-center mt-5" style="height: 100vh;">
-    <div class="d-flex flex-column align-items-center bg-light pt-5" style="width: 500px; height: 60vh;">
+    <div class="d-flex flex-column align-items-center bg-white text-dark pt-5 rounded" style="width: 500px; height: 60vh;">
         <div class="d-flex align-items-center mb-5">
             <h1>Login</h1>
         </div>
