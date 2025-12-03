@@ -6,9 +6,9 @@
     <title>Reegister</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="bg-warning" style="--bs-bg-opacity: .4;">
+<body class="bg-dark text-light">
 <div  class="d-flex justify-content-center mt-5" style="height: 100vh;">
-    <div class="d-flex flex-column align-items-center bg-white text-dark pt-5 rounded" style="width: 500px; height: 60vh;">
+    <div class="d-flex flex-column align-items-center bg-secondary bg-opacity-25 border border-secondary pt-5 rounded" style="width: 25vw; height: 50vh;">
         <div class="d-flex align-items-center mb-5">
             <h1>Login</h1>
         </div>
@@ -19,7 +19,7 @@
 
                 <div class="mb-3">
                     <label class="form-label">Email</label>
-                    <input type="email" name="email" value="{{ old('email') }}" class="form-control" required>
+                    <input type="email" name="email" value="{{ old('email') }}" class="form-control " required>
                 </div>
 
                 <div class="mb-3">
@@ -31,9 +31,9 @@
                     Registrarme
                 </button>
             </form>
-
-
-
+            <p class="text-center mt-3">
+                ¿No tienes cuenta? <a class="text-info text-decoration-none" href="{{route('register')}}">Crear Cuenta</a>
+            </p>
         </div>
     </div>
 </div>

@@ -3,22 +3,38 @@
     <x-slot:title>
         Mis Reservas
     </x-slot>
-    <main class="flex max-w-[335px] w-full flex-col-reverse lg:max-w-4xl lg:flex-row">
-        <div class="text-[13px] leading-[20px] flex-1 p-6 pb-12 lg:p-20 bg-white dark:bg-[#161615] dark:text-[#EDEDEC] shadow-[inset_0px_0px_0px_1px_rgba(26,26,0,0.16)] dark:shadow-[inset_0px_0px_0px_1px_#fffaed2d] rounded-bl-lg rounded-br-lg lg:rounded-tl-lg lg:rounded-br-none">
-            <h1 class="mb-1 font-medium">Mis Reservas</h1>
-            <ul class="max-w-md divide-y divide-default mb-4">
-                @foreach($reservas as $reserva)
-                <li class="pb-3 sm:pb-4">
+    <main class="flex max-w-[335px] w-full flex-col lg:max-w-4xl">
 
-                    {{$user->name}} - {{$user->email}} - {{$reserva->telefono}} <br>
-                    {{$reserva->fecha}} - {{$reserva->hora}} - {{$reserva->sala->id}} - {{$reserva->numpersonas}}
-                </li>
+        <div class="flex-1 p-6 pb-12 lg:p-20 bg-[#161615] text-[#EDEDEC] shadow-[inset_0px_0px_0px_1px_#fffaed2d] rounded-lg text-[14px] leading-[22px]">
+
+            <h1 class="mb-6 text-2xl font-semibold text-center">
+                Mis Reservas
+            </h1>
+
+            <ul class="space-y-4">
+                @foreach($reservas as $reserva)
+                    <li class="p-4 rounded-md bg-[#1f1f1f] flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-300">
+                                Sala: {{$reserva->sala->id}} - Personas: {{$reserva->numpersonas}}<br>
+                                Fecha: {{$reserva->fecha}} - Hora: {{$reserva->hora}}
+                            </p>
+                        </div>
+                        <div class="text-sm text-gray-300">
+                            <a href="">Cancelar</a>
+                        </div>
+
+                    </li>
                 @endforeach
             </ul>
+
+            <div class="mt-8 flex justify-center">
+                <x-button_w link="{{ route('nueva-reserva') }}" texto="Haz una reserva ahora" />
+            </div>
+
         </div>
 
-        <x-button_w link="{{route('nueva-reserva')}}" texto="Haz una reserva ahora"/>
-
     </main>
+
 </x-layout>
 
