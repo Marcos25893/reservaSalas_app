@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Reserva extends Model
 {
+
     /**
      * @return BelongsTo Me devuelve la mesa a la que pertenece la reserva
      */

@@ -21,4 +21,7 @@ Route::middleware(['auth'])->group(function () {
     //Mostrar formulario para nueva reserva
 
     Route::get('/nueva-reserva', [ReservaController::class, 'new'])->name('nueva-reserva');
+
+    //Buscar disponibilidad para una nueva reserva
+    Route::post('/buscar-disponibilidad', [ReservaController::class, 'buscarDisponibilidad'])->name('reservas.buscar');
 });
