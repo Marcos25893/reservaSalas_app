@@ -9,6 +9,15 @@
             <form method="POST" action="{{ route('reservas.buscar') }}" class="space-y-4">
                 @csrf
 
+                @if ($errors->any())
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
                 <!-- Fecha -->
                 <x-input label="Fecha" type="date" name="fecha" required />
@@ -27,10 +36,10 @@
                     </select>
                 </div>
 
-                <!-- Número de personas -->
                 <x-input label="Número de personas" type="number" name="numpersonas" placeholder="2" required />
 
-                <!-- Botón -->
+                <x-input label="Teléfono de contacto" type="tel" name="telefono" required />
+
                 <button type="submit" class="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition">
                     Buscar
                 </button>
@@ -39,4 +48,4 @@
         </div>
     </main>
 
-    </x-layout>
+</x-layout>

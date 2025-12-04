@@ -17,11 +17,18 @@
                         <div>
                             <p class="text-sm text-gray-300">
                                 Sala: {{$reserva->sala->id}} - Personas: {{$reserva->numpersonas}}<br>
-                                Fecha: {{$reserva->fecha}} - Hora: {{$reserva->hora}}
+                                Fecha: {{$reserva->fecha}} - Hora: {{$reserva->hora}}<br>
+                                Estado: <span class="
+                                @if($reserva->estado == 'cancelada') text-red-500
+                                @elseif($reserva->estado == 'pendiente') text-yellow-500
+                                @else text-green-500
+                                @endif">
+                                    {{$reserva->estado}}
+                                </span>
                             </p>
                         </div>
                         <div class="text-sm text-gray-300">
-                            <a href="">Cancelar</a>
+                            <a href="{{route('reservas.cancelar', [ 'reserva' => $reserva->id ] )}}">Cancelar</a>
                         </div>
 
                     </li>
@@ -29,7 +36,7 @@
             </ul>
 
             <div class="mt-8 flex justify-center">
-                <x-button_w link="{{ route('nueva-reserva') }}" texto="Haz una reserva ahora" />
+                <x-button_w link="{{ route('nueva-reserva')}}" texto="Haz una reserva ahora" />
             </div>
 
         </div>

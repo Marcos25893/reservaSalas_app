@@ -24,4 +24,8 @@ Route::middleware(['auth'])->group(function () {
 
     //Buscar disponibilidad para una nueva reserva
     Route::post('/buscar-disponibilidad', [ReservaController::class, 'buscarDisponibilidad'])->name('reservas.buscar');
+
+    Route::post('/crear-reserva', [ReservaController::class, 'store'])->name('reservas.store');
+
+    Route::get('/mis-reservas/{reserva}/cancelarReserva', [ReservaController::class, 'cancelarReserva'])->name('reservas.cancelar');
 });

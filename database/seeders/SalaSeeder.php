@@ -19,5 +19,7 @@ class SalaSeeder extends Seeder
         DB::table('salas')->insert(['capacidad' => 5, 'equipamiento' => 'wifi', 'tipo' => 'privada']);
         DB::table('salas')->insert(['capacidad' => 5, 'equipamiento' => 'proyector', 'tipo' => 'interior']);
         DB::table('salas')->insert(['capacidad' => 10, 'equipamiento' => 'proyector', 'tipo' => 'terraza']);
+        DB::table('salas')->insert(['capacidad' => 2, 'equipamiento' => 'wifi', 'tipo' => 'privada']);
+        DB::table('salas')->insert(['capacidad' => 3, 'equipamiento' => 'pizarra', 'tipo' => 'interior']);
     }
 }

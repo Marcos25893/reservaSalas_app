@@ -21,8 +21,25 @@ class ReservaController extends Controller
         return view('reservas.new');
     }
 
-    public function store(){
-        echo "crear reserva";
+    public function store(Request $request){
+        $sala_id=$request->input('sala_id');
+        $telefono=$request->input('telefono');
+        $fecha=$request->input('fecha');
+        $hora=$request->input('hora');
+        $numpersonas=$request->input('numpersonas');
+
+        Reserva::create([
+            'sala_id' => $sala_id,
+            'telefono' => $telefono,
+            'fecha' => $fecha,
+            'hora' => $hora,
+            'numpersonas' => $numpersonas,
+            'estado' => 'pendiente',
+            'user_id' => auth()->id()
+        ]);
+
+        return redirect('mis-reservas');
+
     }
 
     public function buscarDisponibilidad(Request $request)  {
@@ -31,16 +48,19 @@ class ReservaController extends Controller
             'fecha' => 'required|date|after_or_equal:today',
             'hora' => 'required',
             'numpersonas' => 'required|integer|min:1',
+            'telefono' => 'required|string|min:9',
         ]);
 
         $fecha = $request->input('fecha');
         $hora = $request->input('hora');
-        $num_personas = $request->input('numpersonas');
+        $numpersonas = $request->input('numpersonas');
+        $telefono = $request->input('telefono');
+
 
         //Lógica para buscar disponibilidad de salas
         // Obtener todas las mesas
-        $sala = Sala::where('capacidad', '>=', $num_personas)
-                        ->where('capacidad', '<=', 2 + ($num_personas))->get();
+        $sala = Sala::where('capacidad', '>=', $numpersonas)
+                        ->where('capacidad', '<=', 2 + ($numpersonas))->get();
 
         // Filtrar salas ocupadas en esa fecha y hora
         $ocupadas = Reserva::where('fecha', $fecha)
@@ -51,7 +71,20 @@ class ReservaController extends Controller
         // Salas libres
         $libres = $sala->whereNotIn('id', $ocupadas);
 
-        return view('reservas.search', compact('libres', 'fecha', 'hora', 'num_personas'));
+        return view('reservas.search', compact('libres', 'fecha', 'hora', 'numpersonas', 'telefono'));
 
+    }
+
+    public function cancelarReserva($reserva){
+        $reserva = Reserva::findOrFail($reserva);
+
+        if ($reserva->user_id != auth()->id()) {
+            abort(403);
+        }
+
+        $reserva->estado = 'cancelada';
+        $reserva->save();
+
+        return redirect()->route('mis-reservas');
     }
 }
