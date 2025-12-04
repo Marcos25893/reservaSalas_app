@@ -4,7 +4,11 @@
             <h1 class="mb-1 font-medium">BIENVENIDO</h1>
             <ul class="flex gap-3 text-sm leading-normal">
                 <li>
-                    <x-button_w link="{{route('nueva-reserva')}}" texto="Haz una reserva ahora"/>
+                    @if(auth()->user()->admin)
+                        <x-button_w link="{{route('reservas.pendientes')}}" texto="Ver Todas las Reservas Pendientes"/>
+                    @else
+                        <x-button_w link="{{route('nueva-reserva')}}" texto="Haz una reserva ahora"/>
+                    @endif
                 </li>
             </ul>
         </div>

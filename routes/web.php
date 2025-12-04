@@ -29,3 +29,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/mis-reservas/{reserva}/cancelarReserva', [ReservaController::class, 'cancelarReserva'])->name('reservas.cancelar');
 });
+
+//Rutasa protegidas por login y admin
+Route::middleware(['auth', 'admin'])->group(function () {
+
+    Route::get('/reservas/pendientes', [ReservaController::class, 'pendientes'])->name('reservas.pendientes');
+    Route::post('/reservas/filtrar', [ReservaController::class, 'filtrar'])->name('reservas.filtrar');
+
+    Route::get('/reservas/{reserva}/confirmarReserva', [ReservaController::class, 'confirmarReserva'])->name('reservas.confirmar');
+});

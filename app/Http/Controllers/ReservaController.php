@@ -16,7 +16,6 @@ class ReservaController extends Controller
         return view('reservas.index', compact('reservas', 'user'));
     }
 
-
     public function new(){
         return view('reservas.new');
     }
@@ -76,15 +75,62 @@ class ReservaController extends Controller
     }
 
     public function cancelarReserva($reserva){
-        $reserva = Reserva::findOrFail($reserva);
+        $reservas = Reserva::findOrFail($reserva);
 
-        if ($reserva->user_id != auth()->id()) {
+        //Mejor hacerlo con policies
+        //Si la reserva no es del usuario sale error
+        if (!auth()->user()->admin) {
+            if ($reserva->user_id != auth()->id()) {
+                abort(403);
+            }
+        }
+
+        $reservas->estado = 'cancelada';
+        $reservas->save();
+
+        if (auth()->user()->admin){
+            return redirect()->route('reservas.pendientes');
+        }else {
+            return redirect()->route('mis-reservas');
+        }
+    }
+
+    public function pendientes(){
+        $reservas = Reserva::where('fecha', '>=', now()->toDateString())->get();
+
+        return view('reservas.pendientes', compact('reservas'));
+    }
+
+    public function filtrar(Request $request){
+        $fecha = $request->input('fecha');
+        $estado = $request->input('estado');
+
+        if ($estado == 'todas') {
+            $estados = ['pendiente', 'cancelada', 'confirmada'];
+            $reservas = Reserva::where('fecha', '=', $fecha)->
+            whereIn('estado', $estados)->get();
+        }else{
+            $reservas = Reserva::where('fecha', '=', $fecha)->
+            where('estado', '=', $estado)->get();
+        }
+
+        return view('reservas.pendientes', compact('reservas'));
+    }
+
+    public function confirmarReserva($reserva){
+        $reservas = Reserva::findOrFail($reserva);
+
+        //Mejor hacerlo con policies
+        //Si la reserva no es del usuario sale error
+        if (!auth()->user()->admin) {
             abort(403);
         }
 
-        $reserva->estado = 'cancelada';
-        $reserva->save();
+        if ($reservas->estado == 'pendiente'){
+            $reservas->estado = 'confirmada';
+            $reservas->save();
+        }
 
-        return redirect()->route('mis-reservas');
+        return redirect()->route('reservas.pendientes');
     }
 }
