@@ -83,7 +83,7 @@ class ReservaController extends Controller
         //Mejor hacerlo con policies
         //Si la reserva no es del usuario sale error
         if (!auth()->user()->admin) {
-            if ($reserva->user_id != auth()->id()) {
+            if ($reservas->user_id != auth()->id()) {
                 abort(403);
             }
         }
